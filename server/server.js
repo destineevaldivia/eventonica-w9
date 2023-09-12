@@ -21,13 +21,15 @@ app.get("/", (req, res) => {
     res.json("Hello Techtonica 2023 H2 to your Server for Eventonica!");
   });
 
-
+//Defines the route handler for incoming GET request to this URL
 app.get('/api/events', async (req, res) =>{
 
     //real connection with the DB eventonica
     try{
+        //DataBase query retrieving data from `events` table and storing it in the events variable
         const { rows: events } = await db.query('SELECT * FROM events');
         console.log("in the server", events)
+        //send events data as a JSON reponse to the client
         res.send(events);
 
     } catch(error){
