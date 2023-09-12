@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 // //creates an endpoint for the route `/`
 app.get("/", (req, res) => {
-    res.json("Hello Techtonica 2023 H2 to your Server for Eventonica");
+    res.json("Hello Techtonica 2023 H2 to your Server for Eventonica!");
   });
 
 
