@@ -4,12 +4,15 @@ import CardGroup from 'react-bootstrap/CardGroup';
 
 
 function Events() {
+    //state mangement
     const [events, setEvents] = useState([]);
-
+    
+    //Function to make a GET request and fetch events from DB
     const getRequest = () => {
       fetch("http://localhost:8080/api/events")
       .then((response) => response.json())
       .then(events => {
+        //update the `events` state with the fetched data
         setEvents(events); 
         console.log('Events fetched...', events);
         });

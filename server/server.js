@@ -58,5 +58,5 @@ app.get('/api/events', async (req, res) =>{
 })
 
 
-
+//listen on PORT 8080, start up server and run
 app.listen(PORT, () => console.log(`Hola! Server running on Port http://localhost:${PORT}`));
