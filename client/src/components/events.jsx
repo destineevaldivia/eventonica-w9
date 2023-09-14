@@ -21,15 +21,25 @@ function Events() {
     }
 
     const handlePostRequest = (data) => {
-      return fetch('http://localhost:8080/api/events', {
+        fetch('http://localhost:8080/api/events', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
-      });
-      .then((response) => {return response.json()})
+      })
+      .then((response) => response.json())
       .then((data) => {
-        console.log(data)
+        console.log("inside post", data)
         setEvents([...events, data])
+      })
+    }
+    const handleDeleteRequest = (id) => {
+      //console.log("From the events list", id);
+      fetch(`http://localhost:8080/api/events/${id}`, {
+        method: "DELETE"
+      }).then((response) => {
+        if(response.status === 200) {
+          getRequest()
+        }
       })
     }
 
@@ -40,7 +50,7 @@ function Events() {
     <div>
     <CardGroup className="Events">
             {events.map(event =>
-            <EventCard key={event.id} title={event.title} location={event.location} time={event.eventtime}/>
+            <EventCard key={event.id} event={event} onDelete={handleDeleteRequest}/>
             )}
     </CardGroup>
     </div>
