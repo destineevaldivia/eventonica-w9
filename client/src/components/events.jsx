@@ -35,17 +35,23 @@ function Events() {
         console.error("Error posting data:", error);
       });
     };
-    
+
     const handleDeleteRequest = (id) => {
       //console.log("From the events list", id);
       fetch(`http://localhost:8080/api/events/${id}`, {
-        method: "DELETE"
-      }).then((response) => {
-        if(response.status === 200) {
-          getRequest()
-        }
+        method: "DELETE",
+        headers: { 'Content-Type': 'application/json'},
       })
-    }
+      .then((response) => {
+        if(response.status === 204) {
+          getRequest() 
+        } 
+
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+    };
 
   useEffect(() => { getRequest() }, []);
 

@@ -1,4 +1,3 @@
-// This is the minimal express server. 
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -15,17 +14,16 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Creates an endpoint for the route `/`
+// Define root route
 app.get("/", (req, res) => {
     res.json("Hello Techtonica 2023 H2 to your Server for Eventonica!");
   });
 
 // Defines the route handler for incoming GET request to this URL
 app.get('/api/events', async (req, res) =>{
-
     // Real connection with the DB eventonica
-    try{
-        // dataBase query retrieving data from `events` table and storing it in the events variable
+    try {
+        // retrieving the data from db query and storing it in const variable, `events`
         const { rows: events } = await db.query('SELECT * FROM events');
         console.log("in the server", events)
         // send events data as a JSON reponse to the client
@@ -39,8 +37,6 @@ app.get('/api/events', async (req, res) =>{
 })
 //Defines the route handler for incoming POST request to this URL
 app.post('/api/events', async (req, res) => {
-    // const userData = req.body;
-    // console.log('In the server line 44', userData)
 
     /*INSERT INTO events (title, location, eventdate) VALUES ('Last Friday at Techtonica', 'Online', '2023-12-22');*/
     try {
@@ -60,13 +56,13 @@ app.post('/api/events', async (req, res) => {
 })
 
 //Defines the route handler for incoming DELETE request to this URL
-app.delete('/api/events: id', async (req, res) => {
+app.delete('/api/events:id', async (req, res) => {
     //TODO- make this delete req work
     try {
         const eventId = req.params.id;
         const deleteOperation = await db.query("DELETE FROM events WHERE id=$1", [eventId]);
         console.log(deleteOperation);
-        res.status(200).end()
+        res.status(204).end()
     } catch (error) {
         console.log(error);
         return res.status(400).json({error})
