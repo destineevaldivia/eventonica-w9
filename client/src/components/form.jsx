@@ -24,7 +24,7 @@ const FormEvent = (props) => {
             <label htmlFor="location">Event Location: </label>
             <input type="text" name="location" required placeholder="Where it will take place" ref={userLocation}/> 
 
-            <label htmlFor="eventdate">Event Title: </label>
+            <label htmlFor="eventdate">Event Date: </label>
             {/* <input type="date" name="eventdate" required placeholder="Date of your Event" ref={userEventDate}/>  */}
         </div>
             <button type="submit">Submit</button>

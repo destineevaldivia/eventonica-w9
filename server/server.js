@@ -1,4 +1,4 @@
-//This is the minimal express server. 
+// This is the minimal express server. 
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -11,25 +11,24 @@ const PORT = 8080;
 
 // Configuring cors middleware
 app.use(cors());
-
 // Configuring body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// //creates an endpoint for the route `/`
+// Creates an endpoint for the route `/`
 app.get("/", (req, res) => {
     res.json("Hello Techtonica 2023 H2 to your Server for Eventonica!");
   });
 
-//Defines the route handler for incoming GET request to this URL
+// Defines the route handler for incoming GET request to this URL
 app.get('/api/events', async (req, res) =>{
 
-    //real connection with the DB eventonica
+    // Real connection with the DB eventonica
     try{
-        //DataBase query retrieving data from `events` table and storing it in the events variable
+        // dataBase query retrieving data from `events` table and storing it in the events variable
         const { rows: events } = await db.query('SELECT * FROM events');
         console.log("in the server", events)
-        //send events data as a JSON reponse to the client
+        // send events data as a JSON reponse to the client
         res.send(events);
 
     } catch(error){
@@ -38,7 +37,7 @@ app.get('/api/events', async (req, res) =>{
 
     }  
 })
-
+//Defines the route handler for incoming POST request to this URL
 app.post('/api/events', async (req, res) => {
     // const userData = req.body;
     // console.log('In the server line 44', userData)
@@ -54,14 +53,27 @@ app.post('/api/events', async (req, res) => {
         let dbResponse = result.rows[0];
         console.log(dbResponse)
         res.json(dbResponse);
-    } catch(error){
+    } catch(error) {
         console.log(error);
         return res.status(400).json({error})
     }
 })
 
+//Defines the route handler for incoming DELETE request to this URL
+app.delete('/api/events: id', async (req, res) => {
+    //TODO- make this delete req work
+    try {
+        const eventId = req.params.id;
+        const deleteOperation = await db.query("DELETE FROM events WHERE id=$1", [eventId]);
+        console.log(deleteOperation);
+        res.status(200).end()
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({error})
+    }
+})
 
-
+////Defines the route handler for incoming PUT request to this URL
 
 
 //listen on PORT 8080, start up server and run

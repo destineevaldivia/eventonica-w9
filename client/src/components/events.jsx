@@ -27,11 +27,15 @@ function Events() {
           body: JSON.stringify(data)
       })
       .then((response) => response.json())
-      .then((data) => {
-        console.log("inside post", data)
-        setEvents([...events, data])
+      .then((newEvent) => {
+        console.log("inside post", newEvent)
+        setEvents([...events, newEvent])
       })
-    }
+      .catch((error) => {
+        console.error("Error posting data:", error);
+      });
+    };
+    
     const handleDeleteRequest = (id) => {
       //console.log("From the events list", id);
       fetch(`http://localhost:8080/api/events/${id}`, {

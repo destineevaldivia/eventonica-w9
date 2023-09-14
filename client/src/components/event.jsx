@@ -6,7 +6,6 @@ import moment from 'moment';
 
 const EventCard = (props) => {
     const handleDelete = () => {
-        //localhost:8080/api/events/5
         const idToDelete = props.event.id;
         confirmAlert({
             title: 'Confirm to Delete Event',
@@ -27,12 +26,11 @@ const EventCard = (props) => {
             ]
           });
         }
-        //props.onDelete(idToDelete)
 
     return (
         <Card style={{ width: '18rem' }}>
             <Card.Body>
-                <Card.Title>{props.title}</Card.Title>
+                <Card.Title>{props.event.title}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">Date: {!props.event.eventdate ? "TBD" :moment(props.event.eventdate).format('MMMM Do, YYYY')}</Card.Subtitle>
                 <Card.Text>
                     Location: {props.event.location}
