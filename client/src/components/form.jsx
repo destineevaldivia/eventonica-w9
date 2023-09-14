@@ -3,7 +3,6 @@ import { useRef } from "react";
 
 const FormEvent = (props) => {
     //const [ event, setEvent ] = useState({title: "", location:"", eventdate:""})
-
     const userTitle = useRef()
     const userLocation = useRef()
 
@@ -11,11 +10,10 @@ const FormEvent = (props) => {
         e.preventDefault();
        const userEvent = {title: userTitle.current?.value, location: userLocation?.current.value, eventdate: new Date()}
        console.log("inside in the component", userEvent);
-       //setEvent(userEvent);
        props.submit(userEvent)
     }
+    
     return (
-        
         <form onSubmit={handleSubmit}>
            <h3 className="formTitle">Add a new event:</h3>
 

@@ -45,21 +45,24 @@ app.post('/api/events', async (req, res) => {
 
     /*INSERT INTO events (title, location, eventdate) VALUES ('Last Friday at Techtonica', 'Online', '2023-12-22');*/
     try {
-        const userData = req.body;
         const { title, location, eventdate } = req.body;
         //fxn syntax = await db.query("the sql query", [title, location, eventdate])
-        const { rows } = await db.query(
-            "INSERT INTO events (title, location, eventdate) VALUES ($1, $2, $3)"
-            [title, location, eventdate]
+        const result = await db.query(
+            "INSERT INTO events (title, location, eventdate) VALUES ($1, $2, $3) RETURNING *",
+            [title, location, eventdate]  
         );
-        console.log("In the server", rows[0])
-        res.send(rows[0]);
-   
+        let dbResponse = result.rows[0];
+        console.log(dbResponse)
+        res.json(dbResponse);
     } catch(error){
         console.log(error);
         return res.status(400).json({error})
     }
 })
+
+
+
+
 
 //listen on PORT 8080, start up server and run
 app.listen(PORT, () => console.log(`Hola! Server running on Port http://localhost:${PORT}`));
