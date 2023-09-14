@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import EventCard from "./event";
-import FormEvent from './components/form';
+import FormEvent from './form';
 import CardGroup from 'react-bootstrap/CardGroup';
 
 //This functional component called Events, manages a piece of state ('events')
@@ -20,22 +20,20 @@ function Events() {
         });
     }
 
-    const handlePostRequest = async (data) => {
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      };
-      return fetch('http://localhost:8080/api/events', requestOptions);
-      .then(response => response.json())
+    const handlePostRequest = (data) => {
+      return fetch('http://localhost:8080/api/events', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+      });
+      .then((response) => {return response.json()})
       .then((data) => {
-        console.log('Success', data);
+        console.log(data)
         setEvents([...events, data])
       })
     }
 
-
-    useEffect(() => { getRequest() }, []);
+  useEffect(() => { getRequest() }, []);
 
   return (
     <>
