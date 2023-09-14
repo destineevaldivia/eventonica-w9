@@ -36,27 +36,31 @@ app.get('/api/events', async (req, res) =>{
         console.log(error);
         return res.status(400).json({error});
 
-    }
-
-    //hardcode the events response for testing reasons. This call has one more event that the real DB 
-    // try{
-    //     const events = [
-
-    //         {id: 1, title: 'Women in Tech Techtonica Panel', location: 'Overland Park Convention Center'},
-    //         {id: 2, title: 'Japanese Cultural Education', location: 'Seattle Convention Center'},
-    //         {id: 3, title: "Haven 90's Party Night Club", location: 'Hilton Hotel Kansas City'},
-    //         {id: 4, title: 'Comedy Night at the Station', location: 'SF Hilton Hotel'},
-    //         {id: 5, title: 'A Decadent Arts Experience', location: 'West Ridge Mall'},
-    //         {id: 6, title: 'Techtonica Classroom Course', location: 'Techtonica HQ'}
-    //       ];
-    //     res.json(events);
-
-    // } catch(error){
-    //     console.log(error);
-    // }   
-    
+    }  
 })
 
+app.post('/api/events', async (req, res) => {
+    // const userData = req.body;
+    // console.log('In the server line 44', userData)
+
+    /*INSERT INTO events (title, location, eventdate) VALUES ('Last Friday at Techtonica', 'Online', '2023-12-22');*/
+    try {
+        const userData = req.body;
+        const { title, location, eventdate } = req.body;
+        //fxn syntax = await db.query("the sql query", [title, location, eventdate])
+        const { rows } = await db.query(
+            "INSERT INTO events (title, location, eventdate) VALUES ($1, $2, $3)"
+            [title, location, eventdate]
+        );
+        console.log("In the server", rows[0])
+        res.send(rows[0]);
+   
+    } catch(error){
+        console.log(error);
+        return res.status(400).json({error})
+    }
+})
 
 //listen on PORT 8080, start up server and run
 app.listen(PORT, () => console.log(`Hola! Server running on Port http://localhost:${PORT}`));
+
