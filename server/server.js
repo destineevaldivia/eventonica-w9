@@ -57,7 +57,6 @@ app.post('/api/events', async (req, res) => {
 
 //Defines the route handler for incoming DELETE request to this URL
 app.delete('/api/events/:id', async (req, res) => {
-    //TODO- make this delete req work
     try {
         const eventId = req.params.id;
         const deleteOperation = await db.query("DELETE FROM events WHERE id=$1", [eventId]);
@@ -70,7 +69,21 @@ app.delete('/api/events/:id', async (req, res) => {
 })
 
 //Defines the route handler for incoming PUT request to this URL
+app.get('/api/events/:id', async (req, res) =>{
+    //MAKE THIS WORK
+    try {
+        // retrieving the data from db query and storing it in const variable, `events`
+        const { rows: events } = await db.query('UPDATE FROM events WHERE id=$1');
+        console.log("in the server", events)
+        // send events data as a JSON reponse to the client
+        res.send(events);
 
+    } catch(error){
+        console.log(error);
+        return res.status(400).json({error});
+
+    }  
+})
 
 //listen on PORT 8080, start up server and run
 app.listen(PORT, () => console.log(`Hola! Server running on Port http://localhost:${PORT}`));
