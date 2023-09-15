@@ -56,20 +56,20 @@ app.post('/api/events', async (req, res) => {
 })
 
 //Defines the route handler for incoming DELETE request to this URL
-app.delete('/api/events:id', async (req, res) => {
+app.delete('/api/events/:id', async (req, res) => {
     //TODO- make this delete req work
     try {
         const eventId = req.params.id;
         const deleteOperation = await db.query("DELETE FROM events WHERE id=$1", [eventId]);
         console.log(deleteOperation);
-        res.status(204).end()
+        return res.status(204).json("You've successfuly deleted this event")
     } catch (error) {
         console.log(error);
         return res.status(400).json({error})
     }
 })
 
-////Defines the route handler for incoming PUT request to this URL
+//Defines the route handler for incoming PUT request to this URL
 
 
 //listen on PORT 8080, start up server and run

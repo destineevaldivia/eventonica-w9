@@ -6,7 +6,7 @@ import moment from 'moment';
 
 const EventCard = (props) => {
     const handleDelete = () => {
-        const idToDelete = props.event.id;
+        const idToDelete = props.event.id; ///???what does this access
         confirmAlert({
             title: 'Confirm to Delete Event',
             message: `Are you sure to delete this event: ${props.event.title}?`,
@@ -27,6 +27,11 @@ const EventCard = (props) => {
           });
         }
 
+    const handleUpdate = () => {
+        //const eventToUpdate = props.event..not sure what would go here yet
+        // ***Logic for handling edit button
+    }
+
     return (
         <Card style={{ width: '18rem' }}>
             <Card.Body>
@@ -36,7 +41,7 @@ const EventCard = (props) => {
                     Location: {props.event.location}
                 </Card.Text>
                 <button onClick={handleDelete}>Delete</button>
-                <button>Edit</button>
+                <button onClick={handleUpdate}>Edit</button>
             </Card.Body>
         </Card>
     )
