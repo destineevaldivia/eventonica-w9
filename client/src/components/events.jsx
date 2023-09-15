@@ -8,7 +8,7 @@ function Events() {
     //state mangement
     const [events, setEvents] = useState([]);
     
-    //A JS Function that makes a GET request and fetch events data from my DB
+    //GET request function that fetches events data from my DB
     const getRequest = () => {
       fetch("http://localhost:8080/api/events")
       //then method chain handles the response from the server, converts the data to JSON
@@ -19,7 +19,7 @@ function Events() {
         console.log('Events fetched...', events);
         });
     }
-
+    //POST request function 
     const handlePostRequest = (data) => {
         fetch('http://localhost:8080/api/events', {
           method: 'POST',
@@ -35,7 +35,7 @@ function Events() {
         console.error("Error posting data:", error);
       });
     };
-
+    //DELETE request function 
     const handleDeleteRequest = (id) => {
       //console.log("From the events list", id);
       fetch(`http://localhost:8080/api/events/${id}`, {
@@ -52,6 +52,29 @@ function Events() {
         console.error("Fetch error:", error);
       });
     };
+    
+    //FINISH PUT request function 
+    const handlePutRequest = (id, updateData) => {
+      fetch(`http://localhost:8080/api/events/${id}`, {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updateData)
+      })
+      .then((response) => response.json())
+      .then((updatedEvent) => {
+        console.log("Event updated:", updatedEvent);
+        // update the local state with the updated event
+        setEvents((prevEvents) => 
+          prevEvents.map((event) => 
+            event.id === updatedEvent.id ? updatedEvent : event
+          )
+        );
+    })
+      .catch((error) => {
+        console.log("Error updating event:", error);
+      });
+  };
+
 
   useEffect(() => { getRequest() }, []);
 
@@ -66,6 +89,10 @@ function Events() {
     </div>
     <div>
         <FormEvent submit={handlePostRequest}/>
+    </div>
+
+    <div>
+        <FormEvent edit={handlePutRequest}/>
     </div>
     </>
   );
